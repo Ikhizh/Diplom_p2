@@ -1,7 +1,7 @@
 package practicum.util;
 
-import practicum.Models.IngredientModel;
-import practicum.Models.Ingredients;
+import practicum.models.IngredientModel;
+import practicum.models.Ingredients;
 
 import java.util.ArrayList;
 import java.util.List;

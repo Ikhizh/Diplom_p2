@@ -8,6 +8,7 @@ public class UserCreds {
         this.email = email;
         this.password = password;
     }
+
     public static UserCreds credsFrom(User user) {
         return new UserCreds(user.getEmail(), user.getPassword());
     }

@@ -1,23 +1,22 @@
 package practicum.requests;
 
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
-import practicum.Models.TokenModel;
+import practicum.models.TokenModel;
 import practicum.user.User;
 import practicum.user.UserCreds;
 import practicum.util.Utils;
 
 import static io.restassured.RestAssured.given;
+import static practicum.constants.UrlConstants.*;
 
 public class UserRequest {
-    private static final String BASE_URI = "https://stellarburgers.nomoreparties.site/";
-    private static final String REGISTER_PATH = "api/auth/register";
-    private static final String LOGIN_PATH = "api/auth/login";
-
     public UserRequest() {
         RestAssured.baseURI = BASE_URI;
     }
 
+    @Step("Register user")
     public ValidatableResponse create(User user) {
         return given()
                 .header("Content-type", "application/json")
@@ -28,6 +27,7 @@ public class UserRequest {
                 .then();
     }
 
+    @Step("Login user")
     public ValidatableResponse login(UserCreds creds) {
         return given()
                 .header("Content-type", "application/json")
@@ -38,13 +38,14 @@ public class UserRequest {
                 .then();
     }
 
+    @Step("Delete user")
     public void delete(User user, TokenModel tokenResponse) {
         given()
                 .auth().oauth2(Utils.getTokenWithoutBearer(tokenResponse.getAccessToken()))
                 .header("Content-type", "application/json")
                 .body(user)
                 .when()
-                .delete("api/auth/user")
+                .delete(USER_PATH)
                 .then()
                 .statusCode(202);
     }
