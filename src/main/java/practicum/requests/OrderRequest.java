@@ -38,21 +38,21 @@ public class OrderRequest {
     }
 
     @Step("Get orders for user with login")
-    public ValidatableResponse getOrders(String url, TokenModel tokenResponse) {
+    public ValidatableResponse getOrdersForUser(TokenModel tokenResponse) {
         return given()
                 .auth().oauth2(Utils.getTokenWithoutBearer(tokenResponse.getAccessToken()))
                 .header("Content-type", "application/json")
                 .when()
-                .get(url)
+                .get(ORDERS)
                 .then();
     }
 
     @Step("Get all orders without login")
-    public ValidatableResponse getOrders(String url) {
+    public ValidatableResponse getOrdersAll() {
         return given()
                 .header("Content-type", "application/json")
                 .when()
-                .get(url)
+                .get(ALL_ORDERS)
                 .then();
     }
 

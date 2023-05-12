@@ -13,8 +13,6 @@ import practicum.user.User;
 import practicum.user.UserCreds;
 
 import static org.hamcrest.Matchers.*;
-import static practicum.constants.UrlConstants.ALL_ORDERS;
-import static practicum.constants.UrlConstants.ORDERS;
 
 public class GetAllOrdersTests {
     private User user;
@@ -41,9 +39,9 @@ public class GetAllOrdersTests {
 
     @DisplayName("GET / all orders for all users - check quantity of orders")
     @Test
-    public void getAllOrders() {
+    public void getAllOrdersAll() {
         orderRequest
-                .getOrders(ALL_ORDERS)
+                .getOrdersAll()
                 .statusCode(200)
                 .assertThat().body("success", is(true))
                 .body("total", greaterThan(0))
@@ -56,7 +54,7 @@ public class GetAllOrdersTests {
     public void getAlUserOrders() {
         TokenModel tokenResponse = Request.requestUserToken(userCreds);
         orderRequest
-                .getOrders(ORDERS, tokenResponse)
+                .getOrdersForUser(tokenResponse)
                 .statusCode(200)
                 .assertThat().body("success", is(true))
                 .body("total", greaterThan(0))
